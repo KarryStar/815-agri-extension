@@ -415,7 +415,11 @@ function bind(){
   $$(".kp-link").forEach(el=>el.addEventListener("click",e=>{
     e.stopPropagation();const[c,p]=el.dataset.kp.split("-").map(Number);goKp(c,p);
   }));
-  $$(".rq").forEach(el=>el.addEventListener("click",e=>{e.stopPropagation();el.classList.toggle("open");}));
+  $$(".rq").forEach(el=>el.addEventListener("click",e=>{
+    e.stopPropagation();
+    $$(".rq.open").forEach(o=>{if(o!==el)o.classList.remove("open");});
+    el.classList.toggle("open");
+  }));
   /* 回到顶部 */
   const fab=$("#fab");fab.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
   /* 章节完成 */
@@ -552,6 +556,14 @@ window.addEventListener("scroll",()=>{
   const f=$("#fab");if(!f)return;
   f.style.display=(window.scrollY>400&&window.innerWidth<=760)?"flex":"none";
 },{passive:true});
+/* 点击弹层外任意位置或按 Esc，关闭打开的关联题弹层 */
+document.addEventListener("click",e=>{
+  if(e.target instanceof Element&&!e.target.closest(".rq"))
+    $$(".rq.open").forEach(el=>el.classList.remove("open"));
+});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape")$$(".rq.open").forEach(el=>el.classList.remove("open"));
+});
 
 /* 启动 */
 applyHash();

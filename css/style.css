@@ -110,6 +110,7 @@ a{color:inherit;text-decoration:none}
 .kp-link{position:relative;display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--blue);background:var(--blue-bg);border-radius:99px;padding:2px 9px;cursor:pointer;flex:none}
 .kp-link:hover,.kp-link.open{background:var(--green-700);color:#fff}
 .kp-link .kp-pop{width:230px}
+.kp-link:hover .kp-pop,.kp-link.open .kp-pop{display:block}
 .exam-card .hd .kp-link{margin-left:auto}
 .quiz-q .q-t .kp-link{vertical-align:middle}
 .kp-link .dot{width:5px;height:5px;border-radius:50%;background:currentColor;flex:none}
