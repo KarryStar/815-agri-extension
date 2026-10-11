@@ -106,6 +106,16 @@ function updateProg(){
 
 /* ===== 视图容器 ===== */
 const charts=[];
+/* 视图身份：切换页面/章节/筛选时才回到顶部；答题、标记等局部交互不改变滚动位置 */
+function viewKey(){
+  const v=state.view;
+  if(v==="chapter")return "chapter/"+state.chapter;
+  if(v==="terms")return "terms/"+state.termFilter+"/"+state.termLearn+"/"+state.termMode;
+  if(v==="exams")return "exams/"+state.examYear+"/"+state.examType;
+  if(v==="quiz")return "quiz/"+state.quizTab+"/"+state.quizCh;
+  return v;
+}
+let lastViewKey="";
 function render(){
   charts.forEach(c=>{try{c.dispose()}catch(_){}});charts.length=0;
   const v=state.view;
@@ -122,8 +132,10 @@ function render(){
   $("#topCrumb").textContent=crumbOf(v);
   nav();
   bind();
+  const k=viewKey();
+  if(k!==lastViewKey)window.scrollTo({top:0,left:0});
+  lastViewKey=k;
   $("#fab").style.display=(window.scrollY>400&&window.innerWidth<=760)?"flex":"none";
-  window.scrollTo({top:0,left:0});
   if(v==="home")setTimeout(drawCharts,30);
 }
 function titleOf(v){
