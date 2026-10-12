@@ -9,6 +9,8 @@ const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
 const esc=s=>String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 const store={get(k,d){try{return JSON.parse(localStorage.getItem("a815_"+k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem("a815_"+k,JSON.stringify(v))}catch(e){}}};
 const STARS=s=>"★".repeat(s)+"☆".repeat(3-s);
+/* 知识点内容格式化：序号项逐条换行，小节标题（纯短语冒号、前为词边界）独立成行 */
+const fmt=c=>{let s=esc(c).replace(/[①-⑳]/g,m=>"<br>"+m).replace(/(^|[^\u4e00-\u9fa5A-Za-z0-9])([^\s<>。，；：“”"'《》（）()]{1,18}：)(?=<br>[①-⑳])/g,"$1<br>$2");return s.startsWith("<br>")?s.slice(4):s;};
 const today=new Date();
 const dDays=Math.ceil((new Date(2026,11,19)-today)/864e5);
 $("#todayChip").textContent=(today.getMonth()+1)+"月"+today.getDate()+"日 · "+(dDays>0?"距考研 "+dDays+" 天":"考研进行中 · 加油！");
@@ -256,7 +258,7 @@ function viewChapter(){
   ${c.points.map((p,pi)=>`
     <div class="pt ${p.s>=3?"s3":p.s===2?"s2":""}" id="kp-${c.id}-${pi}">
       <div class="hd"><span class="tt">${esc(p.t)}</span>${p.s>=3?`<span class="badge red">必背</span>`:p.s===2?`<span class="badge gold">重点</span>`:`<span class="badge green">了解</span>`}<span class="st">${STARS(p.s)}</span></div>
-      <div class="bd">${p.c}</div>
+      <div class="bd">${fmt(p.c)}</div>
       ${p.tip?`<div class="tip"><b>助记 · </b>${p.tip}</div>`:""}
       ${RELQ[c.id+"-"+pi]?`<div class="relq">${RELQ[c.id+"-"+pi].map((r,ri)=>`
         <span class="rq" data-rq="${c.id}-${pi}-${ri}"><span class="tg ${r.tag==="真题"?"z":"o"}">${r.tag}</span>${r.y?r.y+" · ":""}${esc(r.q.slice(0,16))}${r.q.length>16?"…":""}<span class="kp-pop"><span class="kp-t">${r.tag==="真题"?"历年真题":"本站原创题"}${r.y?" · "+r.y:""}</span><div class="kp-q">${esc(r.q)}</div><div class="kp-a">${esc(r.a)}</div></span></span>`).join("")}</div>`:""}
