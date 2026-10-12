@@ -9,8 +9,13 @@ const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
 const esc=s=>String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 const store={get(k,d){try{return JSON.parse(localStorage.getItem("a815_"+k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem("a815_"+k,JSON.stringify(v))}catch(e){}}};
 const STARS=s=>"★".repeat(s)+"☆".repeat(3-s);
-/* 知识点内容格式化：序号项逐条换行，小节标题（纯短语冒号、前为词边界）独立成行 */
-const fmt=c=>{let s=esc(c).replace(/[①-⑳]/g,m=>"<br>"+m).replace(/(^|[^\u4e00-\u9fa5A-Za-z0-9])([^\s<>。，；：“”"'《》（）()]{1,18}：)(?=<br>[①-⑳])/g,"$1<br>$2");return s.startsWith("<br>")?s.slice(4):s;};
+/* 知识点内容格式化：序号逐条换行；句首短语标题（含带括号形式）独立成行并加粗，括号内容与冒号不加粗 */
+const fmt=c=>{
+  let s=esc(c).replace(/[①-⑳]/g,m=>"<br>"+m);
+  s=s.replace(/(^|[。\n；）]|<br>)([\u4e00-\u9fa5A-Za-z0-9]{1,18})([（(][^（）()]{0,20}[）)])?：/g,
+    (m,a,b,br)=>a==="<br>"||a===""?a+"<b>"+b+"</b>"+(br||"")+"：":a+"<br><b>"+b+"</b>"+(br||"")+"：");
+  return s.startsWith("<br>")?s.slice(4):s;
+};
 const today=new Date();
 const dDays=Math.ceil((new Date(2026,11,19)-today)/864e5);
 $("#todayChip").textContent=(today.getMonth()+1)+"月"+today.getDate()+"日 · "+(dDays>0?"距考研 "+dDays+" 天":"考研进行中 · 加油！");
