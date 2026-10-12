@@ -194,6 +194,7 @@ table.tbl tr:last-child td{border-bottom:none}
 .btn.ghost:hover{border-color:var(--green-500)}
 .btn.gold{background:var(--gold-500);color:#fff}
 .btn.small{padding:6px 12px;font-size:12.5px}
+.btn:disabled{opacity:.45;cursor:not-allowed;pointer-events:none}
 
 /* 筛选条 */
 .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}

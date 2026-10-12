@@ -272,6 +272,8 @@ function viewChapter(){
   <hr class="divider">
   ${c.exam?`<div class="details"><summary>${c.exam.length} 条真题记录（点击展开）</summary><div class="body">${c.exam.map(e=>`<div style="margin:8px 0"><span class="badge gold">${e.y}</span> <span class="badge ${e.type==="论述"?"red":e.type==="简答"?"blue":"green"}">${e.type}</span> <span>${e.q}</span></div>`).join("")}</div></div>`:`<div class="empty">暂无直接真题记录</div>`}
   <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
+    <button class="btn ghost" data-go="chapter" data-id="${c.id-1}" ${c.id<=1?"disabled":""}>← 上一章</button>
+    <button class="btn ghost" data-go="chapter" data-id="${c.id+1}" ${c.id>=18?"disabled":""}>下一章 →</button>
     <button class="btn pri" id="chDoneBtn">${done[c.id]?"✓ 已完成本章（点击取消）":"标记本章已完成"}</button>
     <button class="btn ghost" data-go="quiz" data-qch="第${c.id}章">去本章自测</button>
     <button class="btn ghost" data-go="chapters">返回章节列表</button>
