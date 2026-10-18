@@ -278,7 +278,7 @@
   .sync-btn{width:34px;height:34px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--green-100,#E4EFE8);color:var(--green-700,#2E6B4F);cursor:pointer;flex:none;border:none}
   .sync-btn:hover{background:var(--green-700,#2E6B4F);color:#fff}
   .sync-btn svg{width:17px;height:17px}
-  .sync-mask{position:fixed;inset:0;background:rgba(22,43,35,.45);z-index:300;display:none;align-items:flex-start;justify-content:center;padding:4vh 14px;overflow:auto}
+  .sync-mask{position:fixed;inset:0;background:rgba(22,43,35,.45);z-index:300;display:none;align-items:flex-start;justify-content:center;padding:max(16px,calc(env(safe-area-inset-top) + 12px)) 14px calc(20px + env(safe-area-inset-bottom));overflow:auto}
   .sync-mask.show{display:flex}
   .sync-modal{background:#fff;border-radius:16px;max-width:640px;width:100%;padding:22px 22px 18px;box-shadow:0 18px 60px rgba(0,0,0,.25);font-size:13.5px;color:#24312B;line-height:1.7}
   .sync-modal h3{font-family:var(--serif,serif);font-size:18px;color:var(--green-900,#1E4D3A);display:flex;align-items:center;margin:0 0 10px}
@@ -293,7 +293,7 @@
   .sync-modal .info{background:var(--green-50,#F0F6F2);border-radius:10px;padding:8px 12px;font-size:12px;color:#33413A}
   #syncLog{background:#163B2B;color:#CFE0D5;border-radius:10px;padding:10px 12px;font-size:11.5px;font-family:Consolas,monospace;white-space:pre-wrap;max-height:150px;overflow:auto;margin-top:10px;display:none}
   #syncLog.show{display:block}
-  .sync-close{background:none;border:none;font-size:22px;cursor:pointer;color:#8A9A8E;line-height:1;margin-left:auto}`;
+  .sync-close{background:rgba(22,59,43,.06);border:none;width:40px;height:40px;border-radius:50%;cursor:pointer;color:#5A6B60;line-height:1;font-size:22px;margin-left:auto;flex:none}`;
   function injectUI() {
     const st = document.createElement("style"); st.textContent = CSS; document.head.appendChild(st);
     const host = document.querySelector(".topbar .right");
