@@ -7,7 +7,7 @@
 /* ===== 工具 ===== */
 const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
 const esc=s=>String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-const store={get(k,d){try{return JSON.parse(localStorage.getItem("a815_"+k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem("a815_"+k,JSON.stringify(v))}catch(e){}}};
+const store={get(k,d){try{return JSON.parse(localStorage.getItem("a815_"+k))??d}catch(e){return d}},set(k,v){try{const P="a815_"+k;const raw=localStorage.getItem(P);localStorage.setItem(P,JSON.stringify(v));if(window.__storeChanged)try{window.__storeChanged(k,raw==null?null:JSON.parse(raw),v,"a815_")}catch(_){}}catch(e){}}};
 const STARS=s=>"★".repeat(s)+"☆".repeat(3-s);
 /* 知识点内容格式化：序号逐条换行；句首短语标题（含带括号形式）独立成行并加粗，括号内容与冒号不加粗 */
 const fmt=c=>{
